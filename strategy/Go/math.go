@@ -1,32 +1,31 @@
-package math
+package main
 
 import (
 	"fmt"
-
-	"github.com/kwongjose/DesignPatterns/strategy/Go/addition"
-	"github.com/kwongjose/DesignPatterns/strategy/Go/subtract"
 )
 
+// operation is the interface our concrete strategies will use
 type operation interface {
-	Calculate(x int, y int) int
+	calculate(x int, y int) int
 }
 
+// CalcStrategy is the proxy wraping around the concrete addition/subtraction strategy
 type calcStrategy struct {
-	operation
+	operation operation
 }
 
-var operationStrategy = calcStrategy{}
-
-func Calculate(x int, y int) int {
-	return operationStrategy.Calculate(x, y)
+// Run executes the calcStrategy's operation.
+func (proxy *calcStrategy) Run(x int, y int) int {
+	return proxy.operation.calculate(x, y)
 }
 
-func SetStrategy(strategy string) {
+// SetStrategy sets the calcStrategy's operation to either addition or subtractions
+func (proxy *calcStrategy) SetStrategy(strategy string) {
 	switch strategy {
 	case "add":
-		operationStrategy.Calculate = addition.Calculate
+		proxy.operation = Addition{}
 	case "sub":
-		operationStrategy.Calculate = subtract.Calculate
+		proxy.operation = Subtraction{}
 	default:
 		fmt.Println("Invalid strategy")
 	}
