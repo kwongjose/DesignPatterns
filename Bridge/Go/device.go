@@ -1,6 +1,6 @@
 package main
 
-// appliance is our interface for similar classes
+// Device is our interface for similar classes
 type Device interface {
 	isOn() bool
 	powerOn()
@@ -16,6 +16,8 @@ const (
 	MIN_VOLUME = 0
 )
 
+// Remote is our struct that works with our Device interface.
+// It does not care about the impelmentation only  that it matches.
 type Remote struct {
 	device Device
 }
@@ -28,6 +30,7 @@ func (remote *Remote) togglePower() {
 	}
 }
 
+// volumeUp increases the volume by 1 until it reaches 100
 func (remote *Remote) volumeUp() {
 	currentVol := remote.device.getVolume()
 	if currentVol == MAX_VOLUME {
@@ -37,6 +40,7 @@ func (remote *Remote) volumeUp() {
 	}
 }
 
+// volumeDown decreases the volume by 1 until it reaches 0
 func (remote *Remote) volumeDown() {
 	currentVol := remote.device.getVolume()
 	if currentVol == MIN_VOLUME {

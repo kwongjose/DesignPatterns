@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+/**
+** The radio stuct matches our device interface
+** This is a different implimnation of setChannel than TV
+**/
 type Radio struct {
 	maxChannel     int
 	minChannel     int
@@ -29,11 +33,11 @@ func (radio *Radio) getChannel() int {
 	return radio.currentChannel
 }
 
+// setChannel sets the channel for the radio.
+// If the desired channell is higher than the max or lower than the min channel it does not change the channel
 func (radio *Radio) setChannel(channel int) {
-	if channel > radio.maxChannel {
-		radio.currentChannel = radio.minChannel
-	} else if channel < radio.minChannel {
-		radio.currentChannel = radio.maxChannel
+	if channel > radio.maxChannel || channel < radio.minChannel {
+		return
 	} else {
 		radio.currentChannel = channel
 	}
